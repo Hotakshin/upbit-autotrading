@@ -42,17 +42,19 @@ while True:
         start_time = get_start_time("KRW-BTT")
         end_time = start_time + datetime.timedelta(days=1)
 
-        if start_time < now < end_time - datetime.timedelta(seconds=10):
+        if start_time < now < end_time - datetime.timedelta(seconds=60):
             target_price = get_target_price("KRW-BTT", 0.4)
             current_price = get_current_price("KRW-BTT")
             if target_price < current_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    upbit.buy_market_order("KRW-BTT", krw*0.9995)
+                    upbit.buy_market_order("KRW-BTT", krw*0.0995)
+                    #약 가지고있는 현금의 10%만 매수
         else:
-            btc = get_balance("BTT")
-            if btc > 0.00008:
-                upbit.sell_market_order("KRW-BTT", btc*0.9995)
+            btt = get_balance("BTT")
+            if btt > 600:
+                upbit.sell_market_order("KRW-BTT", btt*1)
+                #전량 매도
         time.sleep(1)
     except Exception as e:
         print(e)
